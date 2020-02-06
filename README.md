@@ -1,5 +1,5 @@
 
-[Redux 10/24](https://www.bilibili.com/video/av56213747?p=10) 
+[Redux 20/24](https://www.bilibili.com/video/av56213747?p=10) 
 ## 全局安装脚手架
 npm install -g create-react-app 全局安装脚手架 需要在管理员权限运行npm
 

@@ -1,5 +1,5 @@
 // 执行方法 相当于图书馆管理员
-import {CHANGE_INPUT, CLICK_BTN, DELETE_ITEM} from "./actionTypes";
+import {CHANGE_INPUT, CLICK_BTN, DELETE_ITEM, GET_LIST} from "./actionTypes";
 const defaultState = {
 	inputValue: "write",
 	list: [
@@ -27,6 +27,12 @@ export default (state = defaultState, action)=>{
 	if( action.type === DELETE_ITEM ){
 		let newState = JSON.parse(JSON.stringify(state));
 		newState.list.splice(action.index, 1);
+		return newState;
+	}
+
+	if( action.type === GET_LIST ){
+		let newState = JSON.parse(JSON.stringify(state));
+		newState.list = action.data;
 		return newState;
 	}
 

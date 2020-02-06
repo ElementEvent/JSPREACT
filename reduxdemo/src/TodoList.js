@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import 'antd/dist/antd.css'
-import { Input, Button, List } from 'antd'
 import store from "./store";
-import {CHANGE_INPUT, CLICK_BTN, DELETE_ITEM} from "./store/actionTypes";
+import {addAction, changeInputAction, deleteAction, getListAction, getMyListAction} from "./store/actionCreators";
+import TodoListUi from "./TodoListUi";
+import axios from 'axios'
 
 class TodoList extends Component {
 
@@ -13,60 +14,51 @@ class TodoList extends Component {
 		this.changeInputValue = this.changeInputValue.bind(this);
 		this.storeChange = this.storeChange.bind(this);
 		this.clickBtn = this.clickBtn.bind(this);
-		//this.clickDelete = this.clickDelete.bind(this);
+		this.clickDelete = this.clickDelete.bind(this);
 		store.subscribe(this.storeChange) //订阅模式,针对input的value值中无法发生改变
 	}
 
 	render() {
 		return (
-			<div style={{'margin': '10px'}}>
-
-				<div>
-					<Input
-						value={this.state.inputValue}
-						onChange={this.changeInputValue}
-					/>
-					<Button
-						type='primary'
-						onClick={this.clickBtn}
-					>
-						新增
-					</Button>
-				</div>
-
-				<div style={{'margin': '10px', 'width': '300px'}}>
-					<List
-						bordered
-						dataSource={this.state.list}
-						renderItem={(item, index)=>(<List.Item onClick={this.clickDelete.bind(this, index)}>{item}</List.Item>)}
-					/>
-				</div>
-
-			</div>
+			<TodoListUi
+				inputValue={this.state.inputValue}
+				list={this.state.list}
+				changeInputValue={this.changeInputValue}
+				clickBtn={this.clickBtn}
+				clickDelete={this.clickDelete}
+			/>
 		);
 	}
 
+	componentDidMount() {
+		// 使用redux-saga
+		const action = getMyListAction();
+		store.dispatch(action);
+
+
+		// 异步调用数据
+		/*axios.get('http://localhost.charlesproxy.com:3000/list.json').then(res=>{
+			console.log(res);
+			const data = res.data;
+			const action = getListAction(data);
+			store.dispatch(action);
+		}).catch(err=>{
+			console.log(err);
+		})*/
+	}
+
 	changeInputValue(e){
-		const action = {
-			type: CHANGE_INPUT,
-			value: e.target.value
-		};
+		const action = changeInputAction(e.target.value);
 		store.dispatch(action);
 	}
 
 	clickBtn(){
-		const action = {
-			type: CLICK_BTN,
-			value: store.getState().inputValue
-		};
+		const action = addAction(store.getState().inputValue);
 		store.dispatch(action);
 	}
 
 	clickDelete(index){
-		const action = {
-			type: DELETE_ITEM,
-			index: index
-		};
+		const action = deleteAction(index);
 		store.dispatch(action);
 	}
 
