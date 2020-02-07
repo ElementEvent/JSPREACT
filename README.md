@@ -1,5 +1,6 @@
 
-[Redux 20/24](https://www.bilibili.com/video/av56213747?p=10) 
+[Redux 20/24](https://www.bilibili.com/video/av56213747?p=10) 已完结
+ 
 ## 全局安装脚手架
 npm install -g create-react-app 全局安装脚手架 需要在管理员权限运行npm
 
@@ -192,6 +193,18 @@ rwwd + tab键 - - 在没有导入的情况下，在ES6模块系统中创建一�
 ## react UI组件[ant](https://ant.design/docs/react/introduce-cn)
     类似于VUE中element-ui
 
+
+##redux 基础解析
+    
+    store 状态管理中
+        index.js 为主体
+        reducer 管理数据的分发
+        action 操作数据的行为
+
+##
+
+
+
 ## redux-thunk 维护ajax请求中间件 让redux能够执行函数
     cnpm install redux-thunk --save
     使用放在 store index.js中
@@ -205,9 +218,30 @@ rwwd + tab键 - - 在没有导入的情况下，在ES6模块系统中创建一�
     
 
 ## redux-saga 中间件
+    参考 reduxdemo
     cnpm install redux-saga --save
     
+    /**
+     *
+     *  saga运行逻辑解析
+     *  先在 componentDidMount 执行store
+     *
+     *  在mySagas（）方法中监听store的 action类型，并且执行一个方法
+     *  在方法中请求数据，然后再调用store的action通过reducer修改数据
+     *
+     *
+     * */
+    
 ## 
+
+## react-redux 自己的中间件 依赖先安装redux 
+    参考react-redux-demo
+    在需要使用的地方引入 Provider 来源于 react-redux
+    import {Provider} from 'react-redux';
+    
+    
+    
+##
     
 
 1 - 谈谈对Vue的双向绑定的理解
