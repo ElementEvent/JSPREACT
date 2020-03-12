@@ -1,5 +1,18 @@
 
-[Redux 20/24](https://www.bilibili.com/video/av56213747?p=10) 已完结
+[Redux 24/24](https://www.bilibili.com/video/av56213747?p=10) 已完成
+
+[Router 9/9](https://www.bilibili.com/video/av61672919?=5) 已完成
+
+[React Hooks 11/11](https://www.bilibili.com/video/av63409044) 已完成
+
+[Next.js 12/12](https://www.bilibili.com/video/av66351541) 已完成
+
+[React实战 42/44](https://www.bilibili.com/video/av68325396) 已完成
+
+[Koa2实战 13/13](https://www.bilibili.com/video/av36421651) 中台需要
+
+RN
+
  
 ## 全局安装脚手架
 npm install -g create-react-app 全局安装脚手架 需要在管理员权限运行npm
@@ -276,4 +289,292 @@ viewmodal作为view和modal的中间桥梁，将逻辑业务数据和视图分�
 js功底扎实对函数式变成理解透彻使用react
 ng暂时不考虑
 如果项目临时修改多,环境音速和打包效率低,要实时修改和查看就使用jquery
+
+## react-router-dom 路由管理
+    npm install react-router-dom --save 
+    
+    引入
+    import { BrowserRouter as Router, Route, Link } from 'react-router-dom' 
+
+    Route关键字: 
+        exact: 精确匹配
+        
+    Route标签: 
+        Redirect: 重定向
+
+## react-hooks react新特性
+    不再使用Component
+    import React, { useState } from 'react';
+    参考文件exampleHooks
+useState使用
+    const [age, setAge] = useState(16)// age = 18, 定义一个修改功能
+    useState 不能存在条件判断语句中
+    
+useEffect 代替生命周期函数 异步函数
+    useEffect代替 componentDidMount 和 componentDidUpdate
+    
+    解绑useEffect代替 在useEffect内返回一个匿名函数即可
+    useEffect(fn1 , [])
+    第二个参数为数据, 需要解除生命周期的时候, 如果传递为[] 那么当前页面执行的刷新, 都不会去执行解除方法, []可以填写变量, 为监听到该变量发生变化则执行解除函数
+    
+useContext 父子通信
+    参考文件example
+    
+useReducer 一般结合useContext一起使用 参考Example5, 结合使用例子参考example6
+
+useMemo 监听更新缓存状态 参考example7
+
+useRef 获取dom元素 example8
+
+useCallback 缓存方法
+
+## next.js 服务端渲染
+   
+    全局安装next 脚手架工具
+    npm install -g create-next-app
+    npm add @zeit/next-css  在next中使用css包 
+        新增next.comfig.js 
+        配置: 
+        const withCss = require('@zeit/next-css');
+        
+        if(typeof require !== 'undefined'){
+        	require.extensions['.css']=file=>{}
+        }
+        
+        module.exports = withCss({});
+   
+    
+    npm/npx create-next-app (项目名称)
+    
+    npm run dev
+    
+    目录解析:
+    components 下存放小组件
+    pages 存放视图, 并且目录就是对应的路由
+    pubilc 公共静态资源
+    
+    功能使用:
+        
+        1:路由跳转:
+            html: <Link></linl> 跳转
+            js: Router.push('/index')
+    
+            路由跳转传递参数 只能通过query传递
+            接受路由传参的组件需要引入
+               import {withRouter} from "next/router";
+               详情参考pages/linkB页面 
+               
+            router 钩子函数
+                routerChangeStart 路由正要发生变化之前
+                routerChangeComplete 路由发生变化之后
+                beforeHistoryChange 在更改浏览器历史之前触发
+                routerChangeError 路由发生错误
+                hashChangeStart
+                hashChangeComplete
+
+        2:异步获取数据
+        组件名称.getInitialProps()方法, 返回值必须是一个对象,该方法不能在子组件中调用
+        传参中 {router, data} data是解构后的属性值
+
+        3: 懒加载组件 moment日期库
+            懒加载公用组件
+             参考next-create > pages > time.js
+            懒加载自定义组件
+            import dynamic from "next/dynamic"; // 懒加载自定义组件
+            
+        4.SEO搜索优化
+            pages -> header.js
+            
+        5.使用import引入css
+        cnpm install --save @zeit/next-css
+        需要在根目录下创建 next.config.js 配置文件
+        
+        5.安装antd UI
+        cnpm install antd
+        
+        6.分批加载UI babel-plugin-import
+        跟目录下创建 .babelrc
+        基础配置如下
+        
+        {
+          "presets": ["next/babel"],
+          "plugins": [
+            [
+              "import",
+              {
+                "libraryName": "antd",
+                "style": "css"
+              }
+            ]
+          ]
+        }
+    
+        7.更换端口
+        在package.json中
+        "start": "next start -p 80       
+
+
+## 实战目录解析
+pages
+    _app.js 所有页面的-整体引入文件
+    
+    
+组件:
+    markdown-navbar 解析markdown生成导航
+        source: 需要解析的语法
+        headingTopOffset: 点击跳转到位置后距顶部的位置
+        
+    ReactMarkdown 解析展示markdown
+        source: 需要解析的语法
+        escapeHtml: 是否解析html语法 布尔
+推荐使用 marked
+        npm install --save marked
+        npm install --save highlight.js
+
+
+## ANTD
+   @ant-design/icons 图标库 
+   Affix 固定布局
+
+
+## 使用egg.js编写中台
+
+全局安装egg脚手架工具
+    npm i egg-init -g
+    egg-init --type=simple 初始化
+    cnpm install
+    目录解析
+        --app 主要源码
+            -- controller 控制器
+            -- public 公用文件
+            -- router 路由
+            -- view 模板
+            -- extend 继承模板
+            -- middleware 中间件
+        --config 配置文件
+        --logs 服务日志
+        --run 运行时生成
+        --test 测试文件
+       
+
+    install --save koa
+    创建index入口文件 
+    127.0.0.0:自定义端口号访问
+    
+    FormatTool： 浏览器json插件
+
+get与post
+    源码编写在： getAndPost中
+    使用中间件：bodyparser
+    get/post 使用中间件bodyparser来解决post请求
+    install koa-bodyparser
+
+router 原生写法
+    参考router
+    
+koa-router 路由插件 
+    源码: koaRouter
+    npm install --save koa-router
+    const Router = require('koa-router'); 引入
+    const router = new Router({ 创建
+    	prefix: '/js' //所有接口访问都要在前面加上 /js目录
+    });
+    router.get('/',(ctx, next)=>{})
+调用中间件
+app
+	.use(router.routes())
+	.use(router.allowedMethods());
+	
+使用cookie
+    源码: cookie.js
+    domain 访问的域名
+    path: '/index' 访问的路径必须是index
+    maxAge: 有效时间 毫秒
+    expires: 过期时间 new Date()类型
+    heepOnly: 是否只有HTTP请求生效 布尔值
+    overwrite: 是否允许重写cookie
+
+服务器模板语法 koa-views
+    npm install --save koa-views
+    npm install --save ejs 模板引擎
+    
+访问静态资源  koa-static
+    npm install --save koa-static
+    
+## egg接口设计 RESTful(诶思特佛) APP API
+   安装数据库插件 npm install --save egg-mysql
+   配置数据库插件
+        配置路口:
+            config -> plugin.js
+            加入: 
+            mysql:{
+            		enable: true,
+            		package: 'egg-mysql'
+            	}
+    下载数据库: phpstudy启动数据库,  navicat11连接数据库
+        config.default.js中加入以下配置
+         config.mysql = {
+            // database configuration
+            client: {
+              // host
+              host: 'localhost',
+              // port
+              port: '3306',
+              // username
+              user: 'root',
+              // password
+              password: 'root',
+              // database
+              database: 'test',
+            },
+            // load into app, default is open
+            app: true,
+            // load into agent, default is close
+            agent: false,
+          };
+    配置完毕后使用 navicat11
+
+## 服务端解决跨域
+npm install --save egg-cors
+在config -> plugin中开启服务
+cors: {
+		enable: true,
+		package: 'egg-cors'
+	}
+然后在config.default.js中添加配置信息
+  config.security = {
+    scrf: {
+      enable: false
+    },
+    domainWhiteList: ['*']
+  };
+
+  config.cors = {
+    origin: '*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS'
+  };
+
+## 排坑攻略
+    axios
+    withCredentials 无效
+    前后端都需要设置为true
+    security cors 地址需要精确地址
+
+## 部署相关
+    axiosShell FinalShell 部署
+    主机IP地址为 公网地址 端口22 
+    
+    Docker 安装
+    yum list docker-ce --showduplcates | sort -r
+    
+    启动
+    sudo systemctl start docker
+    
+    查看正在进行
+    docker ps
+    
+    插件镜像
+    docker images
+
+
 
