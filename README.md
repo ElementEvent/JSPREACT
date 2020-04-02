@@ -11,8 +11,7 @@
 
 [Koa2实战 13/13](https://www.bilibili.com/video/av36421651) 中台需要
 
-RN
-
+[NR 7/43](https://www.bilibili.com/video/BV1JJ411a7pD?p=7)
  
 ## 全局安装脚手架
 npm install -g create-react-app 全局安装脚手架 需要在管理员权限运行npm
@@ -577,4 +576,25 @@ cors: {
     docker images
 
 
+## React Native[文档](https://reactnative.cn/docs/getting-started.html)
+安装yarn 和 react-native-cli
+npm install -g yarn react-native-cli
 
+初始化 react-native init (项目名称)
+
+先开模拟器
+
+运行 yarn react-native run-android
+
+node版本16.3稳定版
+
+### RN错误解决
+错误1: app:processDebugResources
+ 在android编辑器中 > 设置 > build > Gradle > USE Gradle From 选择Specified location 选择包
+
+错误2: Unable to load script Make sure 模拟器报错
+个体app>src>build.gradle 中的数据 project.ext.react添加以下属性
+entryFile: "index.js",
+bundleAssetName: "index.android.bundle",
+bundleInAlpha: true,
+bundleInBeta: true
